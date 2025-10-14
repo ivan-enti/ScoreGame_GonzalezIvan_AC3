@@ -9,11 +9,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.AppTheme
 import com.example.myapplication.ui.theme.components.GameHeader
 import com.example.myapplication.ui.theme.enums.ScreenType
+import com.example.myapplication.ui.theme.screens.GamblingGame
+import com.example.myapplication.ui.theme.screens.MainMenu
+import com.example.myapplication.ui.theme.screens.TicTacToeGame
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +39,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GameApp(modifier: Modifier = Modifier) {
-
+    val current_screen: ScreenType = ScreenType.TICTACTOE
     Box( modifier = modifier.fillMaxSize()) {
-        GameHeader(ScreenType.TICTACTOE, 60, 1520)
+        when (current_screen){
+            ScreenType.MAIN_MENU -> MainMenu()
+            ScreenType.TICTACTOE -> TicTacToeGame()
+            ScreenType.GAMBLING -> GamblingGame()
+        }
     }
 }
 
