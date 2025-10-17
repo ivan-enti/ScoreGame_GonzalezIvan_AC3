@@ -9,16 +9,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.AppTheme
-import com.example.myapplication.ui.theme.components.GameHeader
 import com.example.myapplication.ui.theme.enums.ScreenType
 import com.example.myapplication.ui.theme.screens.GamblingGame
 import com.example.myapplication.ui.theme.screens.MainMenu
 import com.example.myapplication.ui.theme.screens.TicTacToeGame
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +43,22 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GameApp(modifier: Modifier = Modifier) {
-    val current_screen: ScreenType = ScreenType.TICTACTOE
+    val currentScreen = remember { mutableStateOf(ScreenType.GAMBLING) }
+    val score = remember { mutableStateOf(120) }
+    val time = remember { mutableStateOf(0)}
+
     Box( modifier = modifier.fillMaxSize()) {
-        when (current_screen){
-            ScreenType.MAIN_MENU -> MainMenu()
-            ScreenType.TICTACTOE -> TicTacToeGame()
-            ScreenType.GAMBLING -> GamblingGame()
+        when (currentScreen.value){
+            ScreenType.MAIN_MENU -> MainMenu(currentScreen)
+            ScreenType.TICTACTOE -> TicTacToeGame(currentScreen, score, time.value)
+            ScreenType.GAMBLING -> GamblingGame(currentScreen, score, time.value)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1000L)
+            time.value++
         }
     }
 }
@@ -56,3 +70,4 @@ fun GreetingPreview() {
         GameApp()
     }
 }
+
