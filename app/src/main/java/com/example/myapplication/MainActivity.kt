@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GameApp(modifier: Modifier = Modifier) {
-    val currentScreen = remember { mutableStateOf(ScreenType.GAMBLING) }
+    val currentScreen = remember { mutableStateOf(ScreenType.MAIN_MENU) }
     val score = remember { mutableStateOf(120) }
     val time = remember { mutableStateOf(0)}
 
